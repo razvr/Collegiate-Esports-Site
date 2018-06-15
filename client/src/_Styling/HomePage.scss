@@ -1,0 +1,35 @@
+// @import "../../node_modules/bootstrap/scss/functions";
+// @import "../../node_modules/bootstrap/scss/variables";
+// @import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+//  Colors
+$black:   #000;
+$white:   #FFE3E0;
+
+$orange:  #FF6C32;
+$pink:    #FF916D;
+$red:     #EA6041;
+$blue:    #000;
+
+
+.jumbotron {
+  background: linear-gradient( $orange, darken($red, 10%) );
+  // background-color: $orange;
+  color: $white;
+  margin: 0;
+}
+.searchbar {
+  // padding: 10px;
+  background: lighten($pink, 20%);
+  .row {
+    margin: 0;
+  }
+}
+
+.page-footer {
+  background: $orange;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+}
