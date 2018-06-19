@@ -20,11 +20,12 @@ namespace scraper
 
             using (var client = new HttpClient())
             {
+                //  "Hey, look at this HTML page, and check out this table!"
                 var html = client.GetStreamAsync("http://www.espn.com/esports/story/_/id/21152905/college-esports-list-varsity-esports-programs-north-america").Result;
                 var parser = new HtmlParser();
                 var document = parser.Parse(html);
-
                 var tableRows = document.QuerySelectorAll("table.inline-table tr.last");
+
                 List<School> results = new List<School>();
 
                 //  Open SQL Connection
