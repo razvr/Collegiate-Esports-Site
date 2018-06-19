@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using server.Models;
+using library.Models;
 
-namespace server.Services
+namespace library.Services
 {
     public interface IGamesService
     {

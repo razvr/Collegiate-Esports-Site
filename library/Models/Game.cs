@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace server.Models
+namespace library.Models
 {
     public class Game
     {

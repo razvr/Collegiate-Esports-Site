@@ -7,7 +7,9 @@ class SortByGame extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {schoolsByGame(this.props.schools)}
+        <ul className="list-unstyled">
+          {schoolsByGame(this.props.schools)}
+        </ul>
       </React.Fragment>
     )
   }

@@ -1,4 +1,5 @@
-﻿using server.Models;
+﻿using library.Models;
+using server.Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,7 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace server.Services
+namespace library.Services
 {
     public class GamesService : IGamesService
     {
@@ -18,11 +19,11 @@ namespace server.Services
             {
                 con.Open();
 
-                var command = con.CreateCommand();
-                command.CommandText = "Games_GetAll";
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = con.CreateCommand();
+                cmd.CommandText = "Games_GetAll";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                using (var reader = command.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
                     var results = new List<Game>();
 

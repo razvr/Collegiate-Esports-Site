@@ -28,8 +28,6 @@ $blue:    #000;
 }
 
 .page-footer {
-  background: $orange;
-  position: absolute;
-  bottom: 0;
-  width: 100vw;
+  background: darken($red, 5%);
+
 }

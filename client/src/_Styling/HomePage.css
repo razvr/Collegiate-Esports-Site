@@ -8459,9 +8459,6 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .page-footer {
-  background: #FF6C32;
-  position: absolute;
-  bottom: 0;
-  width: 100vw;
+  background: #e74d2a;
 }
 /*# sourceMappingURL=HomePage.css.map */
