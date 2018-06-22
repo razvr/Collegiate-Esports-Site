@@ -1,0 +1,1 @@
+Basically a wikipedia for collegiate esports programs.
