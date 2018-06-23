@@ -1,4 +1,5 @@
-﻿using server.Services;
+﻿using library.Models;
+using library.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,22 @@ namespace server.Controllers
         {
             var results = gamesService.GetAll();
             return Request.CreateResponse(HttpStatusCode.OK, results);
+        }
+
+        [Route("api/games"), HttpPost]
+        public HttpResponseMessage Create(Game game)
+        {
+            if (ModelState == null)
+            {
+                ModelState.AddModelError("", "Your request contained no data.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(
+                    HttpStatusCode.BadRequest,
+                    ModelState
+                    );
+            }
         }
     }
 }
