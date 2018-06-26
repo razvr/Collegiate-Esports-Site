@@ -23,7 +23,7 @@ let printSchool = (school) => {
 };
 
 
-export function ListSchoolsByState(schools) {
+let ListSchoolsByState = (schools) => {
 
   // schools.sort(function (a, b) {
   //   if (a.name < b.name) return -1;
@@ -65,7 +65,11 @@ export function ListSchoolsByState(schools) {
 
 
 export function schoolsByState(data) {
-  
+
+  if (!data){
+    return null;
+  }
+
   let columns = 3;
 
   data.sort(function (a, b) {
@@ -94,7 +98,6 @@ export function schoolsByState(data) {
   let groupTwo = states.slice(perColumn, -perColumn-1);
   let groupThree = states.slice(-perColumn-1, list);
   
-  debugger
   let partOne = [];
   let partTwo = [];
   let partThree = [];

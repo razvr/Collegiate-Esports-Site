@@ -18,27 +18,65 @@ namespace server.Controllers
             this.gamesService = gamesService;
         }
 
-        [Route("api/games"), HttpGet]
+        [ Route("api/games"), HttpGet ]
         public HttpResponseMessage GetAll()
         {
-            var results = gamesService.GetAll();
+            List<Game> results = gamesService.GetAll();
             return Request.CreateResponse(HttpStatusCode.OK, results);
         }
 
-        [Route("api/games"), HttpPost]
-        public HttpResponseMessage Create(Game game)
+        [ Route("api/games"), HttpPost ]
+        public HttpResponseMessage Create(Game_Create game)
         {
-            if (ModelState == null)
+            if (game == null)
             {
                 ModelState.AddModelError("", "Your request contained no data.");
             }
             if (!ModelState.IsValid)
             {
-                return Request.CreateErrorResponse(
-                    HttpStatusCode.BadRequest,
-                    ModelState
-                    );
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
+
+            int Id = gamesService.Create(game);
+
+            return Request.CreateResponse(HttpStatusCode.Created, Id);
+        }
+
+        [ Route("api/games/{id:int}"), HttpGet ]
+        public HttpResponseMessage Get(int Id)
+        {
+            Game game = gamesService.Get( Id );
+            return Request.CreateResponse(HttpStatusCode.OK, game);
+        }
+
+        [ Route("api/games/{id:int}"), HttpPut ]
+        public HttpResponseMessage Update( int Id, Game game )
+        {
+            if (game == null)
+            {
+                ModelState.AddModelError("", "Your request contained no data.");
+            }
+
+            if (game.Id != Id)
+            {
+                ModelState.AddModelError("Id", "Id in the URL does not match the Id in the body.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+
+            gamesService.Update(game);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [ Route("api/games/{id:int}"), HttpDelete ]
+        public HttpResponseMessage Delete(int Id)
+        {
+           gamesService.Delete(Id);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

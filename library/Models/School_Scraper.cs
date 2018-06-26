@@ -7,22 +7,15 @@ using System.Threading.Tasks;
 
 namespace library
 {
-    public class School
+    public class School_Scraper
     {
-        public int Id { get; set; }
-
-        [Required]
-        [MaxLength(50)]
+        [Required] [MaxLength(50)]
         public string Name { get; set; }
 
-        public string City { get; set; }
-
-        [Required]
-        [MaxLength(50)]
+        [Required] [MaxLength(50)]
         public string State { get; set; }
 
+        [Required]
         public string Athletics { get; set; }
-
-        public DateTime DateCreated { get; set; }
     }
 }

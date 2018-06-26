@@ -5,9 +5,8 @@ using System.Web;
 
 namespace library.Models
 {
-    public class Game
+    public class Game_Create
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Publisher { get; set; }
         public int Year { get; set; }

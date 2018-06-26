@@ -43,14 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Models\Game_Create.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\School_Scraper.cs" />
     <Compile Include="Models\School.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IGamesService.cs" />
+    <Compile Include="Services\ISchoolService.cs" />
     <Compile Include="Services\SchoolService.cs" />
     <Compile Include="Services\GamesService.cs" />
-    <Compile Include="Services\IScraperService.cs" />
     <Compile Include="Services\ScraperService.cs" />
   </ItemGroup>
   <ItemGroup>

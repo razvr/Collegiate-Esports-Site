@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route } from "react-router";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 // Imports
 import Jumbotron from './Jumbotron.jsx';
 import Searchbar from './Searchbar.jsx';
 // ---
-import * as schools from './schools';
+// import * as schools from './schools';
 import SortByName from './SortByName.jsx';
 import SortByState from './SortByState.jsx';
 // import SortByGame from './SortByGame.jsx';
@@ -15,12 +16,16 @@ import SortByState from './SortByState.jsx';
 
 class Home extends React.Component {
   
-  
-  
   render() {
-//     let schools = uni;
-console.log(schools.schools);
+
+    console.log('prop', this.props);
+    console.log('state', this.state);
+    // if (!this.props.schools){
+    //   return null;
+    // }
+
     return (
+
       <React.Fragment>
         
         <Jumbotron />
@@ -34,13 +39,13 @@ console.log(schools.schools);
                 <span className="navbar-text">Sort by...</span>
               </div>
               <div className="nav-item col-3">
-                {/* <Link Component={SortByGame} className="nav-link">Games</Link> */}
+                {/* <Link component={SortByGame} className="nav-link">Games</Link> */}
               </div>
               <div className="nav-item col-3">
-                <Link to="/state" Component={SortByState} className="nav-link">State</Link>
+                <Link to="/state" className="nav-link">State</Link>
               </div>
               <div className="nav-item col-3">
-                <Link to="/name" Component={SortByName} className="nav-link">Name</Link>
+                <Link to="/name" className="nav-link">Name</Link>
               </div>
 
             </nav>
@@ -51,9 +56,9 @@ console.log(schools.schools);
 
             {/* <Route exact path="/" render={() => {return <SortByGame schools={this.schools}/>}}/> */}
 
-            <Route exact path="/state" render={() => {return <SortByState schools={schools.schools}/>}}/>
+            <Route exact path="/state" render={() => {return <SortByState schools={this.props.schools}/>}}/>
             
-            <Route exact path="/name" render={() => {return <SortByName schools={schools.schools}/>}}/>
+            <Route exact path="/name" render={() => {return <SortByName schools={this.props.schools}/>}}/>
 
             {/* {columnSplit(schools.schools)} */}
               
@@ -87,4 +92,12 @@ console.log(schools.schools);
     )
   }
 }
-export default Home;
+function mapStateToProps(state) {
+  return {
+    schools: state.schools, 
+    games: state.games
+  }
+};
+
+export default connect(mapStateToProps, null) (Home);
+// export default Home;

@@ -1,5 +1,7 @@
 ﻿using AngleSharp.Parser.Html;
 using library;
+using library.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +18,7 @@ namespace scraper
     {
         static void Main(string[] args)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            ScraperService scraperService = new ScraperService();
 
             using (var client = new HttpClient())
             {
@@ -26,44 +28,29 @@ namespace scraper
                 var document = parser.Parse(html);
                 var tableRows = document.QuerySelectorAll("table.inline-table tr.last");
 
-                List<School> results = new List<School>();
-
-                //  Open SQL Connection
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-
-                    var cmd = con.CreateCommand();
-                    cmd.CommandText = "Schools_Post";
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                List<School_Scraper> results = new List<School_Scraper>();
 
                     //  Loop through table to scrape data
-                    foreach (var tr in tableRows)
-                    {
-                        var school = new School();
+                foreach (var tr in tableRows)
+                {
 
-                        var name = tr.QuerySelector("td");
-                        school.Name = name.TextContent;
+                    var name = tr.QuerySelector("td");
+                    var state = tr.QuerySelector("td:nth-child(2)");
+                    var athletics = tr.QuerySelector("td:nth-child(3)");
 
-                        var state = tr.QuerySelector("td:nth-child(2)");
-                        school.State = state.TextContent;
+                    var school = new School_Scraper();
+                    school.Name = name.TextContent;
+                    school.State = state.TextContent;
+                    school.Athletics = athletics.TextContent;
 
-                        var athletics = tr.QuerySelector("td:nth-child(3)");
-                        school.Athletics = athletics.TextContent;
+                    results.Add(school);
 
-                        results.Add(school);
-
-                        //  Push scraped data to SQL
-                        cmd.Parameters.AddWithValue("@Name", school.Name);
-                        cmd.Parameters.AddWithValue("@State", school.State);
-                        cmd.Parameters.AddWithValue("@Athletics", school.Athletics);
-                        cmd.Parameters.AddWithValue("@Date_Created", school.DateCreated);
-                        cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-                        cmd.ExecuteNonQuery();
-                    }
+                    // give school obj to Service 1 at a time
+                    scraperService.Post(school);
 
                 }
+                //  Look at the list of schools we just scrapped!
+                Console.WriteLine(JsonConvert.SerializeObject(results));
 
             }   //  calls client.Dispose()
         }

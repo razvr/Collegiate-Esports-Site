@@ -61,6 +61,10 @@ let ListSchoolsByName = (schools) => {
 
 export function schoolsByName(data) {
   
+  if (!data){
+    return null;
+  }
+
   let columns = 3;
 
   data.sort(function (a, b) {

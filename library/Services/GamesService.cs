@@ -39,6 +39,7 @@ namespace library.Services
                             Id = (int)reader["Id"],
                             Title = (string)reader["Title"],
                             Publisher = (string)reader["Publisher"],
+                            Year = (int)reader["Year"]
                         };
                         results.Add(game);
                     }
@@ -53,10 +54,28 @@ namespace library.Services
             {
                 con.Open();
                 var cmd = CreateCommand(con, "Games_Get");
+                    cmd.Parameters.AddWithValue("@Id", Id);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+
+                    while (reader.Read())
+                    {
+                        var game = new Game
+                        {
+                            Id = (int)reader["Id"],
+                            Title = (string)reader["Title"],
+                            Publisher = (string)reader["Publisher"],
+                            Year = (int)reader["Year"],
+                        };
+                        return game;
+                    }
+                }
             }
+            return null; // Wants to return something outside the while loop.
         }
 
-        public int Create(Game game)
+        public int Create( Game_Create game )
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -65,31 +84,38 @@ namespace library.Services
 
                 cmd.Parameters.AddWithValue("@Title", game.Title);
                 cmd.Parameters.AddWithValue("@Publisher", game.Publisher);
+                cmd.Parameters.AddWithValue("@Year", game.Year);
                 cmd.Parameters.Add("@Id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 cmd.ExecuteNonQuery();
 
+                return (int)cmd.Parameters["@Id"].Value;
             }
         }
 
-        public Game Update()
+        public void Update(Game game)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 var cmd = CreateCommand(con, "Games_Update");
 
+                cmd.Parameters.AddWithValue("@Id", game.Id);
+                cmd.Parameters.AddWithValue("@Title", game.Title);
+                cmd.Parameters.AddWithValue("@Publisher", game.Publisher);
+                cmd.Parameters.AddWithValue("@Year", game.Year);
+
+                cmd.ExecuteNonQuery();
             }
         }
 
-        public Game Delete( int Id )
+        public void Delete( int Id )
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 var cmd = CreateCommand(con, "Games_Delete");
-
-                
+                cmd.Parameters.AddWithValue("@Id", Id);
             }
         }
     }

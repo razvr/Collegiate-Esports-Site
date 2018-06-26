@@ -1,5 +1,4 @@
 using library.Services;
-using scraper;
 using System;
 
 using Unity;
@@ -45,7 +44,7 @@ namespace server
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IGamesService, GamesService>();
-            container.RegisterType<IScraperService, ScraperService>();
+            container.RegisterType<ISchoolService, SchoolService>();
         }
     }
 }

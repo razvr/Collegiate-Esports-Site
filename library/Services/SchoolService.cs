@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace library.Services
 {
-    public class SchoolService
+    public class SchoolService : ISchoolService
     {
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -33,7 +33,7 @@ namespace library.Services
                         {
                             Id = (int)reader["Id"],
                             Name = (string)reader["Name"],
-                            City = (string)reader["City"],
+                            City = reader["City"] as string, // Allow SQL NULLs
                             State = (string)reader["State"],
                             Athletics = (string)reader["Athletics"],
                             DateCreated = (DateTime)reader["Date_Created"],
